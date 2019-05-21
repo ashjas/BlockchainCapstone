@@ -4,21 +4,44 @@ import 'openzeppelin-solidity/contracts/utils/Address.sol';
 import 'openzeppelin-solidity/contracts/drafts/Counters.sol';
 import 'openzeppelin-solidity/contracts/math/SafeMath.sol';
 import 'openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol';
-import "./Oraclize.sol";
+import "./oraclizeAPI_0.5.sol";
 
 contract Ownable {
     //  TODO's
     //  1) create a private '_owner' variable of type address with a public getter function
-    //  2) create an internal constructor that sets the _owner var to the creater of the contract 
-    //  3) create an 'onlyOwner' modifier that throws if called by any account other than the owner.
-    //  4) fill out the transferOwnership function
-    //  5) create an event that emits anytime ownerShip is transfered (including in the constructor)
-
-    function transferOwnership(address newOwner) public onlyOwner {
-        // TODO add functionality to transfer control of the contract to a newOwner.
-        // make sure the new owner is a real address
-
+    address private _owner;
+    function getOwner() public returns (address)
+    {
+        return _owner;
     }
+
+    //  2) create an internal constructor that sets the _owner var to the creater of the contract
+    constructor() internal
+    {
+
+        _owner = msg.sender;
+        emit ownerChanged(address(0),msg.sender);
+    }
+
+    //  3) create an 'onlyOwner' modifier that throws if called by any account other than the owner.
+    modifier onlyOwner()
+    {
+        require(msg.sender == _owner,"only contract owner is allowed.");
+        _;
+    }
+
+    //  4) fill out the transferOwnership function
+    // TODO add functionality to transfer control of the contract to a newOwner.
+    // make sure the new owner is a real address
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(Address.isContract(newOwner),"The target address not a contract address.");
+        address old = _owner;
+        _owner = newOwner;
+        emit ownerChanged(old,newOwner);
+    }
+
+    //  5) create an event that emits anytime ownerShip is transfered (including in the constructor)
+    event ownerChanged(address indexed oldOwner, address indexed newOwner);
 }
 
 //  TODO's: Create a Pausable contract that inherits from the Ownable contract
