@@ -162,28 +162,32 @@ contract ERC721 is Pausable, ERC165 {
 
     function balanceOf(address owner) public view returns (uint256) {
         // TODO return the token balance of given address
+        return _ownedTokensCount[owner].current();
         // TIP: remember the functions to use for Counters. you can refresh yourself with the link above
     }
 
     function ownerOf(uint256 tokenId) public view returns (address) {
         // TODO return the owner of the given tokenId
+        return _tokenOwner[tokenId];
     }
 
 //    @dev Approves another address to transfer the given token ID
     function approve(address to, uint256 tokenId) public {
         
         // TODO require the given address to not be the owner of the tokenId
+        require(to != _tokenOwner[tokenId],"The address is already the owner of the token.");
 
         // TODO require the msg sender to be the owner of the contract or isApprovedForAll() to be true
-
+        require(isApprovedForAll(_tokenOwner[tokenId],msg.sender),"Cant approve.");
         // TODO add 'to' address to token approvals
-
+        _tokenApprovals[tokenId] = to;
         // TODO emit Approval Event
-
+        emit Approval(_tokenOwner[tokenId],to,tokenId)
     }
 
     function getApproved(uint256 tokenId) public view returns (address) {
         // TODO return token approval if it exists
+        return _tokenApprovals[tokenId];
     }
 
     /**
