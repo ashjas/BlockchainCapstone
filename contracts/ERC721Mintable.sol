@@ -524,15 +524,13 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     }
 
     function tokenURI(uint256 tokenId) external view returns (string memory) {
-        require(_exists(tokenId));
+        require(_exists(tokenId),"tokenId does not exist.");
         return _tokenURIs[tokenId];
     }
 
-    function setTokenURI(uint256 tokenId) internal returns (string memory)
+    function _setTokenURI(uint256 tokenId) internal returns (string memory)
     {
-        bytes memory tmpUri = bytes(_tokenURIs[tokenId]);
-        bool empty = tmpUri.length == 0;
-        require(empty,"tokenURI already exists.");
+        require(_exists(tokenId),"tokenId does not exist.");
         string memory tokenIdStr = uint2str(tokenId);
         _tokenURIs[tokenId] = strConcat(_baseTokenURI, tokenIdStr);
 
@@ -554,6 +552,17 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
 //      -takes in a 'to' address, tokenId, and tokenURI as parameters
 //      -returns a true boolean upon completion of the function
 //      -calls the superclass mint and setTokenURI functions
+contract MyERC721PropertyToken is ERC721Metadata{
+    
+    constructor () public ERC721Metadata("AS_Properties","ASProp","https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/") {
 
+    }
+    function mint(address to, uint256 tokenId, string memory tokenURI) public onlyOwner() returns(bool){
+        super._mint(to, tokenId);
+        super._setTokenURI(tokenId);
+        return true;
+    }
+
+}
 
 
