@@ -557,7 +557,7 @@ contract MyERC721PropertyToken is ERC721Metadata{
     constructor () public ERC721Metadata("AS_Properties","ASProp","https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/") {
 
     }
-    function mint(address to, uint256 tokenId, string memory tokenURI) public onlyOwner() returns(bool){
+    function mint(address to, uint256 tokenId) public onlyOwner() returns(bool){
         super._mint(to, tokenId);
         super._setTokenURI(tokenId);
         return true;

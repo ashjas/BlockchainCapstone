@@ -1,0 +1,8 @@
+./zokrates compile -i code/zokrates/code/square/square.code
+./zokrates setup
+./zokrates compute-witness -a 2 4
+./zokrates generate-proof
+./zokrates export-verifier
+echo Copying Outputs...
+cp out  out.code  proof.json  proving.key  verification.key  verifier.sol  witness  code/zokrates/Outputs/
+
