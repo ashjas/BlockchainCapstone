@@ -17,13 +17,13 @@ contract('TestERC721Mintable', accounts => {
 
     describe('match erc721 spec', function () {
         beforeEach(async function () { 
+            const tokenId = 1;
             this.contract = await MyERC721PropertyToken.new({from: account0});
-            this.contract.mint.call(account1,1,{from: account0});
-            this.contract.mint.call(account2,2,{from: account0});
-            this.contract.mint.call(account3,3,{from: account0});
-            this.contract.mint.call(account4,4,{from: account0});
-            this.contract.mint.call(account5,5,{from: account0});
-            this.contract.mint.call(account6,6,{from: account0});
+            await this.contract.mint.call(account1,tokenId,{from: account0});
+            //let uri = await this.contract.tokenURI.call(1,{from: account0});
+            let owner = await this.contract.ownerOf.call(tokenId,{from: account0});
+            console.log(owner);
+            //assert.equal(uri,"https://s3-us-west-2.amazonaws.com/udacity-blockchain/capstone/1","Uri does not match..");
 
             // TODO: mint multiple tokens
         })
