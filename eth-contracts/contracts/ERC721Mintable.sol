@@ -178,7 +178,7 @@ contract ERC721 is Pausable, ERC165 {
         require(to != _tokenOwner[tokenId],"The account is already the owner of the token.");
 
         // TODO require the msg sender to be the owner of the contract or isApprovedForAll() to be true
-        require(isApprovedForAll(_tokenOwner[tokenId],msg.sender),"Cant approve.");
+        require(isApprovedForAll(getOwner(),msg.sender) || msg.sender == _tokenOwner[tokenId],"Cant approve.");
         // TODO add 'to' address to token approvals
         _tokenApprovals[tokenId] = to;
         // TODO emit Approval Event
