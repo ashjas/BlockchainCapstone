@@ -1,6 +1,6 @@
 var MyERC721PropertyToken = artifacts.require('MyERC721PropertyToken');
 
-contract('TestERC721Mintable', accounts => {
+contract('MyERC721PropertyToken', accounts => {
 
     const account0 = accounts[0];
     const account1 = accounts[1];
