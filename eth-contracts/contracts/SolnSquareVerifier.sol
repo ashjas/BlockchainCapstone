@@ -31,8 +31,8 @@ contract SolnSquareVerifier is MyERC721PropertyToken {
     }
 
     function mintVerifiedToken(
-        uint256 tokenId,
         address to,
+        uint256 tokenId,
         uint[2] memory a,
         uint[2] memory a_p,
         uint[2][2] memory b,
@@ -57,7 +57,7 @@ contract SolnSquareVerifier is MyERC721PropertyToken {
         //add to unique solutions.
         addSolution(tokenId,to,key);
 
-        super.mint(to,tokenId);
+        return super.mint(to,tokenId);
     }
 }
 
