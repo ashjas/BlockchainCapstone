@@ -260,8 +260,6 @@ contract ERC721 is Pausable, ERC165 {
         // TODO mint tokenId to given address & increase token count of owner
         _ownedTokensCount[to].increment();
         _tokenOwner[tokenId] = to;
-        address tt = ownerOf(tokenId);
-        require(tt == to);
         // TODO emit Transfer event
         emit Transfer(address(0), to, tokenId);
     }
@@ -512,15 +510,15 @@ contract ERC721Metadata is ERC721Enumerable, usingOraclize {
     }
 
     // TODO: create external getter functions for name, symbol, and baseTokenURI
-    function getTokenName() external view returns (string memory) {
+    function name() external view returns (string memory) {
         return _name;
     }
 
-    function getTokenSymbol() external view returns (string memory) {
+    function symbol() external view returns (string memory) {
         return _symbol;
     }
 
-    function getBaseTokenURI() external view returns (string memory) {
+    function baseTokenURI() external view returns (string memory) {
         return _baseTokenURI;
     }
 

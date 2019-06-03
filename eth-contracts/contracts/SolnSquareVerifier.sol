@@ -20,7 +20,7 @@ contract SolnSquareVerifier is MyERC721PropertyToken {
     function addSolution(uint256 tokenId, address owner, bytes32 key) internal {
         solution storage sol = solutions[key];
         sol.tokenId = tokenId;
-        sol.owner = owner;
+        sol.owner = owner;//eeee msg.sender?
 
         emit SolutionAdded(tokenId, owner);
     }
